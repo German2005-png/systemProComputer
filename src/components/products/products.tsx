@@ -1,6 +1,5 @@
 'use client'
-import React, { use, useRef } from 'react';
-import rightIcon from '../../../public/svg/rightIcon.svg';
+import React, { useRef } from 'react';
 import rightWIcon from '../../../public/svg/rightW.svg';
 import leftWIcon from '../../../public/svg/leftW.svg';
 import Image from 'next/image';
@@ -27,7 +26,7 @@ interface ProductsProps {
 const Products: React.FC<ProductsProps> = ({name, showButton, data}) => {
   const contProducts = useRef<HTMLUListElement>(null);
   const productRef = useRef<HTMLDivElement>(null);
-  const { showCard, setShowCard, user } = useAppContext();
+  const { setShowCard, user } = useAppContext();
   function handleMoveLeft() {
     if(contProducts.current && productRef.current) {
       contProducts.current.scrollLeft -= productRef.current.clientWidth;

@@ -1,8 +1,6 @@
 'use client'
 import Header from "@/components/header/header"
 import Products from "@/components/products/products";
-import ourPcMegas from "../jsons/ourPcMegas.json";
-import ourPeripherals1 from "../jsons/ourPeripherals1.json";
 import allProducts from "../jsons/allProduct.json";
 import header2Image from '../../public/image/header2.png';
 import header3Image from '../../public/image/header3.png';

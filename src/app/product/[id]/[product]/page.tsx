@@ -35,7 +35,7 @@ export default function Product() {
   const [quantity, setQuantity] = useState<number>(1);
   const [productsFind, setProductsFind] = useState<ProductsFindProps>({products: []});
   const params = useParams<{ id: string; product: string }>();
-  const { showCard, setShowCard, user } = useAppContext();
+  const { setShowCard, user } = useAppContext();
   const [hoverImage, setHoverImage] = useState<string>("");
   const imgRef = React.useRef<HTMLImageElement>(null);
   const [zoomPosition, setZoomPosition] = useState({ x: 0, y: 0 });

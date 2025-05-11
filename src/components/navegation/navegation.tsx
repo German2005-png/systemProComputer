@@ -1,7 +1,7 @@
 'use client'
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import spcImage from "../../../public/image/systemProComputerImage.png";
 import cardIcon from "../../../public/svg/card.svg";
 import burgerIcon from "../../../public/svg/burger.svg";
@@ -18,7 +18,7 @@ export default function Navegation() {
         } else {
             setToken(false);
         }
-    },[Cookies.get("token")])
+    },[])
   return (
     <nav className='sticky top-0 flex items-center justify-between w-full bg-article py-[10px] px-[2%] shadow-md z-40'>
         <Link className='min-w-[106px]' href="/">

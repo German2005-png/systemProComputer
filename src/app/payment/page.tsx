@@ -10,7 +10,6 @@ import leftWIcon from "../../../public/svg/leftW.svg";
 import { loadMercadoPago } from "@mercadopago/sdk-js";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import exp from "constants";
 
 declare global {
   interface Window {

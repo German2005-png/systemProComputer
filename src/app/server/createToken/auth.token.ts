@@ -7,7 +7,7 @@ export function createToken(payload: object) {
         if(!token) return NextResponse.json({error: "ERROR create token"}, {status: 500});
         return token
     } catch (error) {
-        console.log("ERROR create token");
+        console.log("ERROR create token", error);
         return NextResponse.json({error: "ERROR create token in server"}, {status: 500});
     }
 }

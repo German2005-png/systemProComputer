@@ -4,7 +4,7 @@ import CurrencyFormat from '@/utils/currencyFormat';
 import deleteIcon from '../../../public/svg/deleteBlack.svg';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 interface ProductProps {
   id: number;
@@ -17,12 +17,6 @@ interface ProductProps {
 
 export default function NavCart() {
   const { showCard, setShowCard, user, setErrorSign } = useAppContext();
-  const [localStorageAvailable, setLocalStorageAvailable] = useState(false);
-  useEffect(()=> {
-    if(window !== undefined && window.localStorage){
-      setLocalStorageAvailable(true);
-    }
-  },[])
   async function deleteProduct(product: ProductProps) {
     const response = await fetch("/server/api/deleteProduct", {
       method: "PUT",

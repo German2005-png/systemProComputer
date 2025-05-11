@@ -140,7 +140,7 @@ const AppContextProvider: React.FC<AppContentProps> = ({ children }) => {
             }).then(data => {
                 if(data.card && Array.isArray(data.card)) {
                     const allProductsServer = allProduct.allProducts.filter((p)=> data.card.some((cardItem: ProductServerProps) => cardItem.products === p.id));
-                    const productQuality = allProductsServer.map((product)=> product.quantity = data.card.find((cardItem: ProductServerProps) => cardItem.products === product.id)?.productQuality || 0);
+                    allProductsServer.forEach((product)=> product.quantity = data.card.find((cardItem: ProductServerProps) => cardItem.products === product.id)?.productQuality || 0);
                     setShowCard({ products: allProductsServer, state: showCard.state });
                 }
 
@@ -149,7 +149,7 @@ const AppContextProvider: React.FC<AppContentProps> = ({ children }) => {
                 setErrorSign({type: "Error", title: "Error", message: "Ha ocurrido un error!"});
             });
         }
-    }, [user]);
+    }, [user, showCard.state]);
     return (
         <AppContext.Provider value={{ showSign, setShowSign, showCard, setShowCard, showCardModal, setShowCardModal, errorSign, setErrorSign, user, setUser, showUser, setShowUser ,productsUrl, setProductsUrl, cardNumberDigits, setCardNumberDigits, cardDateNumber, setCardDateNumber, cardSecurityCode, setCardSecurityCode, fullName, setFullName, cardId, setCardId, allCard, setAllCard }}>
             {children}

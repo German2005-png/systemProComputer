@@ -1,7 +1,6 @@
 'use client'
 import React, { useEffect } from 'react';
 import errorIcon from '../../../public/svg/error.svg';
-import successIcon from '../../../public/svg/success.svg';
 import Image from 'next/image';
 
 interface ErrorComponentProps {

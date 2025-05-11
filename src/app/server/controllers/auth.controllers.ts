@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { createToken } from "../createToken/auth.token";
 import { userFound } from "../userFound/userFound";
-import { MercadoPagoConfig, Order, Payment, PaymentMethod } from "mercadopago";
+import { MercadoPagoConfig, Payment } from "mercadopago";
 import { randomUUID } from "crypto";
 
 const prisma = new PrismaClient();
@@ -11,53 +11,25 @@ const prisma = new PrismaClient();
 export async function createUser(req: NextRequest) {
   const { username, password, confirmPassword } = await req.json();
   try {
-    if (password !== confirmPassword)
-      return NextResponse.json(
-        { error: "Las contraseñas no coinciden" },
-        { status: 500 }
-      );
-    const userFound = await prisma.user.findFirst({
-      where: { username: username },
-    });
-    if (userFound) {
-      return NextResponse.json(
-        { error: "Este usuario ya existe" },
-        { status: 500 }
-      );
+    if(password !== confirmPassword)
+      return NextResponse.json({ error: "Las contraseñas no coinciden" },{ status: 500 });
+    const userFound = await prisma.user.findFirst({where: { username: username }});
+    if(userFound) {
+      return NextResponse.json({ error: "Este usuario ya existe" },{ status: 500 });
     } else {
       const hashedPassword = await bcrypt.hash(password, 15);
-      if (!hashedPassword)
-        return NextResponse.json(
-          { error: "Al crear la contraseña" },
-          { status: 500 }
-        );
-      const newUser = await prisma.user.create({
-        data: { username: username, password: hashedPassword },
-      });
-      if (!newUser)
-        return NextResponse.json(
-          { error: "Al crear un nuevo Usuario" },
-          { status: 500 }
-        );
+      if(!hashedPassword)
+        return NextResponse.json({ error: "Al crear la contraseña" },{ status: 500 });
+      const newUser = await prisma.user.create({data: { username: username, password: hashedPassword }});
+      if(!newUser)
+        return NextResponse.json({ error: "Al crear un nuevo Usuario" },{ status: 500 });
       const token = createToken({ id: newUser.id });
       console.log(newUser);
-      return NextResponse.json(
-        {
-          user: {
-            username: newUser.username,
-            token: token,
-            createdAt: newUser.createdAt,
-          },
-        },
-        { status: 200 }
-      );
+      return NextResponse.json({user: {username: newUser.username, token: token, createdAt: newUser.createdAt}}, { status: 200 });
     }
   } catch (error) {
     console.error("ERROR create user");
-    return NextResponse.json(
-      { message: "Al crear un nuevo usuario", error: error },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Al crear un nuevo usuario", error: error }, { status: 500 });
   }
 }
 
@@ -66,36 +38,20 @@ export async function login(req: NextRequest) {
   try {
     const userFound = await prisma.user.findFirst({ where: { username } });
     console.log("USER FOUND: ", userFound);
-    if (!userFound)
-      return NextResponse.json(
-        { error: "Usuario no encontrado" },
-        { status: 500 }
-      );
+    if(!userFound)
+      return NextResponse.json({ error: "Usuario no encontrado" }, { status: 500 });
     const passwordCompare = await bcrypt.compare(password, userFound.password);
     console.log(passwordCompare);
-
-    if (!passwordCompare)
+    if(!passwordCompare)
       return NextResponse.json(
         { error: "Contraseña incorrecta" },
         { status: 500 }
       );
     const token = createToken({ id: userFound.id });
-    return NextResponse.json(
-      {
-        user: {
-          username: userFound.username,
-          token: token,
-          createdAt: userFound.createdAt,
-        },
-      },
-      { status: 200 }
-    );
+    return NextResponse.json({user: {username: userFound.username, token: token, createdAt: userFound.createdAt}}, { status: 200 });
   } catch (error) {
     console.error("ERROR user found: ", error);
-    return NextResponse.json(
-      { error: "Usuario no encontrado, intentelo de nuevo!", err: error },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Usuario no encontrado, intentelo de nuevo!", err: error }, { status: 500 });
   }
 }
 
@@ -112,15 +68,12 @@ export async function createCard(req: NextRequest) {
   try {
     const foundUser = await (await userFound(req)).json();
     console.log("PASA POR EL FOUND USER: ", foundUser);
-    if (!foundUser || !foundUser.user || foundUser.error) {
+    if(!foundUser || !foundUser.user || foundUser.error) {
       console.log("PASA POR EL ENCUENTRO DE FOUND USER: ", foundUser);
-      return NextResponse.json(
-        { error: "Usuario no encontrado" },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: "Usuario no encontrado" }, { status: 500 });
     } else {
       console.log("PASA POR EL ELSE DE QUE ENCONTRO FoundUser: ", foundUser);
-      if (productsId !== null) {
+      if(productsId !== null) {
         console.log("No es null y tiene productos: ", productsId);
         console.log("user id: ", foundUser.user.id);
         const foundProduct = await prisma.card.findFirst({
@@ -130,7 +83,7 @@ export async function createCard(req: NextRequest) {
           },
         });
         console.log("FOUND PRODUCT: ", foundProduct);
-        if (!foundProduct) {
+        if(!foundProduct) {
           const newCard = await prisma.card.create({
             data: {
               user: { connect: { id: foundUser.user.id } },
@@ -139,11 +92,8 @@ export async function createCard(req: NextRequest) {
             },
           });
           console.log("CREA EL NUEVO CARD: ", newCard);
-          if (!newCard)
-            return NextResponse.json(
-              { error: "Error al crear la tarjeta" },
-              { status: 500 }
-            );
+          if(!newCard)
+            return NextResponse.json({ error: "Error al crear la tarjeta" }, { status: 500 });
           return NextResponse.json({ newCard: newCard }, { status: 200 });
         } else {
           console.log("Ya existe la tarjeta: ", foundProduct);
@@ -155,11 +105,8 @@ export async function createCard(req: NextRequest) {
                 foundProduct.productQuality + productQuantityValue,
             },
           });
-          if (!updatedCard)
-            return NextResponse.json(
-              { error: "Error al crear la tarjeta" },
-              { status: 500 }
-            );
+          if(!updatedCard)
+            return NextResponse.json({ error: "Error al crear la tarjeta" },{ status: 500 });
           return NextResponse.json({ card: updatedCard }, { status: 200 });
         }
       }
@@ -337,7 +284,6 @@ export async function paymentMp(req: NextRequest) {
     const payment = new Payment(client);
 
     console.log(payment);
-    
 
     const body = {
       transaction_amount: 100.1,

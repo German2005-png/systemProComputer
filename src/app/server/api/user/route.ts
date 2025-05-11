@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     try {
         const token = req.cookies.get("token")?.value;
         if(token) {
-            let decoded = await new Promise<DecodedToken | false>((resolve, reject)=> {
+            const decoded = await new Promise<DecodedToken | false>((resolve, reject)=> {
                 jwt.verify(token, String(process.env.secretJWT), (err, decoded)=> {
                     if(err) {
                         console.error("Error al obtener el usuario");
