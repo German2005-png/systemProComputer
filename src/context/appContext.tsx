@@ -143,7 +143,6 @@ const AppContextProvider: React.FC<AppContentProps> = ({ children }) => {
                     allProductsServer.forEach((product)=> product.quantity = data.card.find((cardItem: ProductServerProps) => cardItem.products === product.id)?.productQuality || 0);
                     setShowCard({ products: allProductsServer, state: showCard.state });
                 }
-
             }).catch(err => {
                 console.error("ERROR AL OBTENER LA TARJETA: ", err);
                 setErrorSign({type: "Error", title: "Error", message: "Ha ocurrido un error!"});
