@@ -1,0 +1,39 @@
+{
+    "product": [
+        {
+            "id": 894,
+            "name": "Mouse Gamer Inalambrico Logitech G Pro Wireless Hero Rgb X3c",
+            "price": 169999,
+            "image": "ourPeripherals1.png",
+            "quantity": 0
+        },
+        {
+            "id": 543,
+            "name": "Mouse Gamer De Juego Inalámbrico Razer Cobra Pro Bt Rgb Color Negro",
+            "price": 212397,
+            "image": "ourPeripherals2.png",
+            "quantity": 0
+        },
+        {
+            "id": 111,
+            "name": "Teclado Mecanico Marvo Kg962 Gaming Rainbow 60% Switch Blue",
+            "price": 36627,
+            "image": "ourPeripherals3.png",
+            "quantity": 0
+        },
+        {
+            "id": 312,
+            "name": "XH100 AURICULAR CRUSH GAMER SOUL RGB",
+            "price": 1580199,
+            "image": "ourPeripherals4.png",
+            "quantity": 0
+        },
+        {
+            "id": 100,
+            "name": "Mouse Pad Gamer Led Rgb 900x400x4mm Gigante Retroiluminado Color Negro",
+            "price": 18392,
+            "image": "ourPeripherals5.png",
+            "quantity": 0
+        }
+    ]
+}

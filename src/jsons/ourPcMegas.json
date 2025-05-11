@@ -1,0 +1,39 @@
+{
+    "product": [
+        {
+            "id": 452,
+            "name": "Notebook Hp Victus Core I5 12va Rtx 3050 16gb 1tb Ssd Win",
+            "price": 1395299,
+            "image": "nuestrasMegasPC1.png",
+            "quantity": 0
+        },
+        {
+            "id": 123,
+            "name": "Notebook Gamer Rog Strix G15 Amd Ryzen 7 512gb G513rc-hn091w Color Gray",
+            "price": 3499999,
+            "image": "nuestrasMegasPC2-1.png",
+            "quantity": 0
+        },
+        {
+            "id": 353,
+            "name": "Notebook Intel I5 Asus F15 Rtx 2050 16gb Ram 512gb Ssd W11h",
+            "price": 1397009,
+            "image": "nuestrasMegasPC3-1.png",
+            "quantity": 0
+        },
+        {
+            "id": 643,
+            "name": "Pc Armada Gamer Amd Ryzen 7 5700g Ram 32gb 960g Ssd Wifi",
+            "price": 664999,
+            "image": "nuestrasMegasPC4-1.png",
+            "quantity": 0
+        },
+        {
+            "id": 778,
+            "name": "Pc Armada Gamer Amd Ryzen 7 Ram 32gb 1tb Ssd Wifi Monitor 22",
+            "price": 879999,
+            "image": "nuestrasMegasPC5-1.png",
+            "quantity": 0
+        }
+    ]
+}

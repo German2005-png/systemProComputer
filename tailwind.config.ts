@@ -12,7 +12,20 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      backgroundColor: {
+        "content": "#FFFFFF",
+        "article": "#FFFFFF",
+        "icon": "#FD4E4E",
+        "btn": "#FD4E4E"
+      },
+      rotate: {
+        'y-0': '0deg',
+        'y-180': '180deg',
+      }
     },
   },
   plugins: [],
+  corePlugins: {
+    transform: true,
+  }
 } satisfies Config;

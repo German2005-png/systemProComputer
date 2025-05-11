@@ -1,0 +1,39 @@
+{
+    "product": [
+        {
+            "id": 432,
+            "name": "Procesador Amd Ryzen 5 9600x Am5 (3.9ghz-5.4ghz)",
+            "price": 362779,
+            "image": "amdRyzen5_900series-1.png",
+            "quantity": 0
+        },
+        {
+            "id": 989,
+            "name": "Procesador gamer AMD Ryzen 7 7800X3D 100-100000910WOF de 8 núcleos y 5GHz de frecuencia con gráfica integrada",
+            "price": 789000,
+            "image": "amdRyzen7_7000series-1.png",
+            "quantity": 0
+        },
+        {
+            "id": 311,
+            "name": "Procesador gamer Intel Core i7-12700F BX8071512700F de 12 núcleos y 4.9GHz de frecuencia sin gráfica integrada",
+            "price": 399999,
+            "image": "intelCoreI7_12ThGen-1.png",
+            "quantity": 0
+        },
+        {
+            "id": 555,
+            "name": "Procesador Cpu Intel Core I3 14100f Quad Core 4.7gh 14va Gen",
+            "price": 139999,
+            "image": "intelCoreI3_14ThGen-1.png",
+            "quantity": 0
+        },
+        {
+            "id": 551,
+            "name": "Procesador Amd Ryzen 9 5900xt 4.8 Ghz Am4 Sin Gpu",
+            "price": 745369,
+            "image": "amdRyzen9_5900series-1.png",
+            "quantity": 0
+        }
+    ]
+}
