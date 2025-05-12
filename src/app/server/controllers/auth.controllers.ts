@@ -62,8 +62,7 @@ interface CardRequestBodyProps {
 }
 
 export async function createCard(req: NextRequest) {
-  const { productsId, productQuantityValue }: CardRequestBodyProps =
-    await req.json();
+  const { productsId, productQuantityValue }: CardRequestBodyProps = await req.json();
   console.log("PRODUCTS ID: ", productsId);
   try {
     const foundUser = await (await userFound(req)).json();
