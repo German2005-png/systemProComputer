@@ -62,7 +62,7 @@ export default function PaymentPage() {
   async function deleteProduct(product: ProductProps) {
     if(Cookies.get("token") || user.username){
       setShowCard((prev) => ({products: prev.products.filter((item) => item.id !== product.id), state: prev.state}));
-      const response = await fetch("/server/api/deleteProduct", {
+      const response = await fetch("/api/deleteProduct", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export default function PaymentPage() {
       if(product.quantity == 1) {
         await deleteProduct(product);
       } else {
-        const response = await fetch("/server/api/reduceProduct", {
+        const response = await fetch("/api/reduceProduct", {
           method: "PUT",
           headers: {"Content-Type": "application/json"},
           body: JSON.stringify({ productId: product.id, reduce: 1 })
@@ -91,7 +91,7 @@ export default function PaymentPage() {
   async function addProduct(product: ProductProps) {
     if(user.username || Cookies.get("token")) {
       try {
-        const response = await fetch("/server/api/createCard", {
+        const response = await fetch("/api/createCard", {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -137,7 +137,7 @@ export default function PaymentPage() {
         //   payment_method_id: "master"
         // })
         console.log("cardTokenResponse: ", cardTokenResponse);
-        const response = await fetch("/server/api/payment", {
+        const response = await fetch("/api/payment", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

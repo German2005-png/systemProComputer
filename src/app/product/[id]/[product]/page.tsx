@@ -80,7 +80,7 @@ export default function Product() {
   },[productFound]);
   function addProductServer(product: ProductProps) {
     if(user.username) {
-      fetch("/server/api/createCard", {
+      fetch("/api/createCard", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

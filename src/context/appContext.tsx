@@ -101,7 +101,7 @@ const AppContextProvider: React.FC<AppContentProps> = ({ children }) => {
     useEffect(() => {
         if (Cookies.get("token")) {
             if (!user.username) {
-                fetch("/server/api/user", {
+                fetch("/api/user", {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -126,7 +126,7 @@ const AppContextProvider: React.FC<AppContentProps> = ({ children }) => {
 
     useEffect(() => {
         if(user.username) {
-            fetch("/server/api/products", {
+            fetch("/api/products", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

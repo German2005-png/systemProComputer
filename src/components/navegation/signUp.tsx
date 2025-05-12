@@ -24,7 +24,7 @@ export default function SignUp() {
       password: singUpInputChange.password,
       confirmPassword: singUpInputChange.confirmPassword
     }
-    const response = await fetch('/server/api/signUp', {
+    const response = await fetch('/api/signUp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

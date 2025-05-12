@@ -23,7 +23,7 @@ export default function SignIn() {
       username: SingInInputChange.username,
       password: SingInInputChange.password
     }
-    const response = await fetch('/server/api/signIn', {
+    const response = await fetch('/api/signIn', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -18,7 +18,7 @@ interface ProductProps {
 export default function NavCart() {
   const { showCard, setShowCard, user, setErrorSign } = useAppContext();
   async function deleteProduct(product: ProductProps) {
-    const response = await fetch("/server/api/deleteProduct", {
+    const response = await fetch("/api/deleteProduct", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

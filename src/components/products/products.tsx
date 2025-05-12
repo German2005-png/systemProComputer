@@ -49,7 +49,7 @@ const Products: React.FC<ProductsProps> = ({name, showButton, data}) => {
   }
   function addProductCard(product: Product) {
     if(user.username) {
-      fetch("/server/api/createCard", {
+      fetch("/api/createCard", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
