@@ -87,7 +87,7 @@ export async function createCard(req: NextRequest) {
             data: {
               user: { connect: { id: foundUser.user.id } },
               products: productsId,
-              productQuality: productQuantityValue,
+              productQuantity: productQuantityValue,
             },
           });
           console.log("CREA EL NUEVO CARD: ", newCard);
@@ -100,8 +100,7 @@ export async function createCard(req: NextRequest) {
             where: { id: foundProduct.id },
             data: {
               products: productsId,
-              productQuality:
-                foundProduct.productQuality + productQuantityValue,
+              productQuantity: foundProduct.productQuantity + productQuantityValue,
             },
           });
           if(!updatedCard)
@@ -112,10 +111,7 @@ export async function createCard(req: NextRequest) {
     }
   } catch (error) {
     console.error("ERROR al agregar productos", error);
-    return NextResponse.json(
-      { error: "ERROR al agregar productos" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "ERROR al agregar productos" }, { status: 500 });
   }
 }
 
@@ -131,11 +127,8 @@ export async function reduceProduct(req: NextRequest) {
   try {
     const foundUser = await (await userFound(req)).json();
     console.log(foundUser);
-    if (!foundUser || !foundUser.user || foundUser.error) {
-      return NextResponse.json(
-        { error: "Usuario no encontrado" },
-        { status: 500 }
-      );
+    if(!foundUser || !foundUser.user || foundUser.error) {
+      return NextResponse.json({ error: "Usuario no encontrado" }, { status: 500 });
     } else {
       console.log("Antes de actualizar");
       const productLess = await prisma.card.updateMany({
@@ -143,28 +136,18 @@ export async function reduceProduct(req: NextRequest) {
           userId: foundUser.user.id,
           products: productId,
         },
-        data: {
-          productQuality: {
-            decrement: 1,
-          },
-        },
+        data: {productQuantity: {decrement: 1}}
       });
       console.log("Despues de actualizar");
-      if (!productLess) {
-        return NextResponse.json(
-          { error: "Error less Product" },
-          { status: 500 }
-        );
+      if(!productLess) {
+        return NextResponse.json({ error: "Error less Product" }, { status: 500 });
       } else {
         return NextResponse.json({ less: productLess }, { status: 200 });
       }
     }
   } catch (error) {
     console.error("Error al lees user", error);
-    return NextResponse.json(
-      { message: "ERROR less product" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "ERROR less product" }, { status: 500 });
   }
 }
 
@@ -172,16 +155,13 @@ export async function deleteProduct(req: NextRequest) {
   const { productId } = await req.json();
   try {
     const foundUser = await (await userFound(req)).json();
-    if (!foundUser || !foundUser.user || foundUser.error) {
-      return NextResponse.json(
-        { error: "Usuario no encontrado" },
-        { status: 500 }
-      );
+    if(!foundUser || !foundUser.user || foundUser.error) {
+      return NextResponse.json({ error: "Usuario no encontrado" }, { status: 500 });
     } else {
       const deletedProduct = await prisma.card.deleteMany({
         where: { userId: foundUser.user.id, products: { in: [productId] } },
       });
-      if (!deletedProduct)
+      if(!deletedProduct)
         return NextResponse.json(
           { error: "Error al eliminar el producto" },
           { status: 500 }
@@ -203,11 +183,8 @@ export async function deleteProduct(req: NextRequest) {
 export async function getCard(req: NextRequest) {
   try {
     const foundUser = await (await userFound(req)).json();
-    if (!foundUser || !foundUser.user || foundUser.error) {
-      return NextResponse.json(
-        { error: "Usuario no encontrado" },
-        { status: 500 }
-      );
+    if(!foundUser || !foundUser.user || foundUser.error) {
+      return NextResponse.json({ error: "Usuario no encontrado" }, { status: 500 });
     } else {
       const cardFound = await prisma.card.findMany({
         where: { userId: foundUser.user.id },
@@ -223,7 +200,7 @@ export async function getCard(req: NextRequest) {
             return {
               id: card.id,
               products: card.products,
-              productQuality: card.productQuality,
+              productQuality: card.productQuantity,
             };
           }),
         },

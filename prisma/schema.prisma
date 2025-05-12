@@ -32,7 +32,7 @@ model User {
 model Card {
   id                Int               @id @default(autoincrement())
   products          Int
-  productQuality   Int
+  productQuantity   Int
   userId            Int
   user              User              @relation(fields: [userId], references: [id])
 }
