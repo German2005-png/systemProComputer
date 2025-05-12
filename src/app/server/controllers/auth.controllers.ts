@@ -110,7 +110,7 @@ export async function createCard(req: NextRequest) {
       }
     }
   } catch (error) {
-    console.error("ERROR al agregar productos", error);
+    console.error("ERROR al agregar productos: ", error);
     return NextResponse.json({ error: "ERROR al agregar productos" }, { status: 500 });
   }
 }
