@@ -146,7 +146,7 @@ export async function reduceProduct(req: NextRequest) {
       }
     }
   } catch (error) {
-    console.error("Error al lees user", error);
+    console.error("Error al lees user: ", error);
     return NextResponse.json({ message: "ERROR less product" }, { status: 500 });
   }
 }
