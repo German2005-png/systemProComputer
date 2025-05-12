@@ -141,14 +141,14 @@ const AppContextProvider: React.FC<AppContentProps> = ({ children }) => {
                 if(data.card && Array.isArray(data.card)) {
                     const allProductsServer = allProduct.allProducts.filter((p)=> data.card.some((cardItem: ProductServerProps) => cardItem.products === p.id));
                     allProductsServer.forEach((product)=> product.quantity = data.card.find((cardItem: ProductServerProps) => cardItem.products === product.id)?.productQuality || 0);
-                    setShowCard({ products: allProductsServer, state: showCard.state });
+                    setShowCard(prev => ({products: allProductsServer,state: prev.state}));
                 }
             }).catch(err => {
                 console.error("ERROR AL OBTENER LA TARJETA: ", err);
                 setErrorSign({type: "Error", title: "Error", message: "Ha ocurrido un error!"});
             });
         }
-    }, [user, showCard.state]);
+    }, [user]);
     return (
         <AppContext.Provider value={{ showSign, setShowSign, showCard, setShowCard, showCardModal, setShowCardModal, errorSign, setErrorSign, user, setUser, showUser, setShowUser ,productsUrl, setProductsUrl, cardNumberDigits, setCardNumberDigits, cardDateNumber, setCardDateNumber, cardSecurityCode, setCardSecurityCode, fullName, setFullName, cardId, setCardId, allCard, setAllCard }}>
             {children}
