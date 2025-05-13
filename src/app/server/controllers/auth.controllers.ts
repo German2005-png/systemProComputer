@@ -268,7 +268,7 @@ export async function paymentMp(req: NextRequest) {
       installments: 1,
       payment_method_id: paymentMethodId,
       payer: {
-        email: "german.contacto06@gmail.com",
+        email: "mauricontacto23@gmail.com",
         identification: {
           type: identificationType,
           number: identificationNumber,
