@@ -262,7 +262,7 @@ export async function paymentMp(req: NextRequest) {
     console.log(payment);
 
     const body = {
-      transaction_amount: 100.1,
+      transaction_amount: 10.1,
       token: token,
       description: "Compra en tienda",
       installments: 1,
