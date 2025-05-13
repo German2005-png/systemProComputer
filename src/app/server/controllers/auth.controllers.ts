@@ -242,7 +242,7 @@ export async function getCard(req: NextRequest) {
 // console.log(pago)
 
 export async function paymentMp(req: NextRequest) {
-  const { token, identificationType, identificationNumber, paymentMethodId, paymentTypeId } = await req.json();
+  const { token, identificationType, identificationNumber, paymentMethodId } = await req.json();
   console.log("Token recibido: ", token);
   console.dir(token, { depth: null });
   try {
@@ -267,7 +267,6 @@ export async function paymentMp(req: NextRequest) {
       description: "Compra en tienda",
       installments: 1,
       payment_method_id: paymentMethodId,
-      payment_type_id: paymentTypeId,
       payer: {
         email: "german.contacto06@gmail.com",
         identification: {

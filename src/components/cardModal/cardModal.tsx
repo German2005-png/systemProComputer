@@ -113,7 +113,7 @@ export default function CardModal() {
                     </div>
                   </div>
                   <div className='absolute w-full h-full rounded-[5px] object-cover' style={{backfaceVisibility: 'hidden' , transform: 'rotateY(180deg)'}}>
-                    <Image className='relative w-full h-full object-cover' src={cardPaymentMethodId == "visa" ? cardBackImageVisa : cardPaymentMethodId == "master" ? cardBackImageMaster : cardPaymentMethodId == "amex" ? cardBackImageAmericanExpress : cardBackImage} width={10000} height={10000} alt=''/>
+                    <Image className='relative w-full h-full object-cover' src={cardPaymentMethodId == "visa" || cardPaymentMethodId == "debvisa" ? cardBackImageVisa : cardPaymentMethodId == "master" || cardPaymentMethodId == "debmaster" ? cardBackImageMaster : cardPaymentMethodId == "amex" ? cardBackImageAmericanExpress : cardBackImage} width={10000} height={10000} alt=''/>
                     <div className='absolute w-[95.3%] bottom-[78px] left-[200px]'>
                       <div className='flex items-center px-[20px] gap-[10px]'>
                       <span className={`${cardPaymentMethodId.length > 1 && cardPaymentMethodId !== "amex" ? "card-text" : cardPaymentMethodId == "amex" ? "text-[#838383]" : "text-[#838383]"} text-[14px]`}>{cardSecurityCode.padEnd(3, "*") || "***"}</span>

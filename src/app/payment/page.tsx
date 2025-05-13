@@ -140,7 +140,7 @@ export default function PaymentPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ token: cardTokenResponse.id, identificationType: 'DNI', identificationNumber: cardId, paymentMethodId: cardPaymentMethodId, paymentTypeId: cardpaymentTypeId })
+          body: JSON.stringify({ token: cardTokenResponse.id, identificationType: 'DNI', identificationNumber: cardId, paymentMethodId: cardPaymentMethodId })
         });
         const result = await response.json();
         console.log("RESULT: ", result);
