@@ -44,7 +44,7 @@ interface ChooseDeviveryProps {
 export default function PaymentPage() {
   const [chooseDevivery, setChooseDelivery] = useState<ChooseDeviveryProps>({receivePackage: "Llega el Lunes", removePackage: "Retirar entre el Lunes a Martes"});
   const [formScroll, setFormScroll] = useState<number>(0);
-  const { user, showCard, setShowCard, setShowCardModal, cardNumberDigits, cardDateNumber, cardSecurityCode, fullName, cardId, cardPaymentMethodId, cardpaymentTypeId, setCardPaymentTypeId } = useAppContext();
+  const { user, showCard, setShowCard, setShowCardModal, cardNumberDigits, cardDateNumber, cardSecurityCode, fullName, cardId, cardPaymentMethodId, setCardPaymentTypeId } = useAppContext();
   const formScrollRef = useRef<HTMLDivElement>(null);
   const btnFormScrooll = useRef<HTMLButtonElement>(null);
 
