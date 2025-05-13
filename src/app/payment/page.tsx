@@ -22,7 +22,6 @@ declare global {
         securityCode: string;
         identificationType: string;
         identificationNumber: string;
-        payment_method_id: string
 
       }) => Promise<{ id: string }>;
     };
@@ -45,7 +44,7 @@ interface ChooseDeviveryProps {
 export default function PaymentPage() {
   const [chooseDevivery, setChooseDelivery] = useState<ChooseDeviveryProps>({receivePackage: "Llega el Lunes", removePackage: "Retirar entre el Lunes a Martes"});
   const [formScroll, setFormScroll] = useState<number>(0);
-  const { user, showCard, setShowCard, setShowCardModal, cardNumberDigits, cardDateNumber, cardSecurityCode, fullName, cardId, cardPaymentMethodId, setCardPaymentTypeId } = useAppContext();
+  const { user, showCard, setShowCard, setShowCardModal, cardNumberDigits, cardDateNumber, cardSecurityCode, fullName, cardId, cardPaymentMethodId, cardpaymentTypeId, setCardPaymentTypeId } = useAppContext();
   const formScrollRef = useRef<HTMLDivElement>(null);
   const btnFormScrooll = useRef<HTMLButtonElement>(null);
 
@@ -123,8 +122,7 @@ export default function PaymentPage() {
           // expirationDate: cardDateNumber[0] + "/" + cardDateNumber[1],
           securityCode: cardSecurityCode,
           identificationType: "DNI",
-          identificationNumber: cardId,
-          payment_method_id: cardPaymentMethodId
+          identificationNumber: cardId
         })
         // const cardTokenResponse = await mp?.createCardToken({
         //   cardNumber: "5031755734530604",
@@ -142,7 +140,7 @@ export default function PaymentPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ token: cardTokenResponse.id, identificationType: 'DNI', identificationNumber: cardId, paymentMethodId: cardPaymentMethodId })
+          body: JSON.stringify({ token: cardTokenResponse.id, identificationType: 'DNI', identificationNumber: cardId, paymentMethodId: cardPaymentMethodId, paymentTypeId: cardpaymentTypeId })
         });
         const result = await response.json();
         console.log("RESULT: ", result);
