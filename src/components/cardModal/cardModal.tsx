@@ -1,18 +1,47 @@
 'use client'
 import Image from 'next/image';
 import React, { useState } from 'react';
+// Card Front
 import cardFrontImage from "../../../public/image/cardImage.png";
+import cardFrontImageVisa from "../../../public/image/cardImageVisa.png";
+import cardFrontImageMaster from "../../../public/image/cardImageMaster.png";
+import cardFrontImageAmericanExpress from "../../../public/image/cardImageAmericanExpress.png";
+// Card Back
 import cardBackImage from "../../../public/image/cardBackImage.png";
+import cardBackImageVisa from "../../../public/image/cardBackImageVisa.png";
+import cardBackImageMaster from "../../../public/image/cardBackImageMaster.png";
+import cardBackImageAmericanExpress from "../../../public/image/cardBackImageAmericanExpress.png";
 import { useAppContext } from '@/context/appContext';
 
 
 export default function CardModal() {
   const [cardRotateY, setCardRotateY] = useState<boolean>(false);
-  const { showCardModal, setShowCardModal, cardNumberDigits, setCardNumberDigits, cardDateNumber, setCardDateNumber, cardSecurityCode, setCardSecurityCode, fullName, setFullName, cardId, setCardId } = useAppContext();
+  const { showCardModal, setShowCardModal, cardNumberDigits, setCardNumberDigits, cardDateNumber, setCardDateNumber, cardSecurityCode, setCardSecurityCode, fullName, setFullName, cardId, setCardId, cardpaymentTypeId, setCardPaymentMethodId, cardPaymentMethodId } = useAppContext();
   function handleCardNumber(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
     const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
     setCardNumberDigits(formattedValue.split(" "))
+    if(cardpaymentTypeId == "credit_card") {
+      if(value.startsWith("4")) {
+        setCardPaymentMethodId("visa");
+      } else if(/^5[1-5]/.test(value)) {
+      setCardPaymentMethodId("master")
+      } else if(value.startsWith("34") || value.startsWith("37")) {
+        setCardPaymentMethodId("amex")
+      } else {
+        setCardPaymentMethodId("");
+      }
+    } else if(cardpaymentTypeId == "debit_card") {
+      if(value.startsWith("4")) {
+        setCardPaymentMethodId("debvisa");
+      } else if(/^5[1-5]/.test(value)) {
+      setCardPaymentMethodId("debmaster")
+      } else {
+        setCardPaymentMethodId("");
+      }
+    } else {
+      setCardPaymentMethodId("");
+    }
   }
   function handleCardDateNumber(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value.replace(/\s/g, '').replace(/\D/g, '');
@@ -27,6 +56,7 @@ export default function CardModal() {
     const value = e.target.value.replace(/\D/g, '');
     setCardId(value)
   }
+  console.log(cardPaymentMethodId)
   return (
     <div className={`${showCardModal ? "flex" : "hidden"} items-center bg-[#00000028] justify-center fixed z-[45] backdrop-blur-[8px] m-auto w-full h-full`}>
         <div className='flex flex-col bg-[#f3f3f3] m-auto border border-solid border-[#0000001a] w-full p-[20px] max-w-[750px] h-[430px] rounded-[20px] z-50'>
@@ -44,7 +74,7 @@ export default function CardModal() {
                 </div>
                 <div className='flex flex-col gap-[5px]'>
                   <label className='text-[12px]'>Nombre y apellido</label>
-                  <input className='w-full border-2 border-solid border-[#0000001a] py-[5px] px-[10px] rounded-[10px] outline-none' type="text" onChange={(e)=> setFullName(e.target.value.toUpperCase().replace(/[^a-zA-Z\s]/g, ''))} value={fullName} maxLength={19} required />
+                  <input className='w-full border-2 border-solid border-[#0000001a] py-[5px] px-[10px] rounded-[10px] outline-none' type="text" onChange={(e)=> setFullName(e.target.value.toUpperCase().replace(/[^a-zA-Z\s]/g, ''))} value={fullName} maxLength={20} required />
                 </div>
                 <div className='flex items-center gap-[10px]'>
                   <div className='flex flex-col gap-[5px]'>
@@ -67,26 +97,26 @@ export default function CardModal() {
               <div className='w-full rounded-[5px] max-w-[280px] h-[150px] card-container' style={{perspective: '1000px'}}>
                 <div className='relative w-[280px] h-[150px] card' style={{transform: `${cardRotateY ? 'rotateY(180deg)' : 'rotateY(0deg)'}`}} onClick={()=> setCardRotateY(!cardRotateY)}>
                   <div className='absolute w-full h-full rounded-[5px] object-cover' style={{backfaceVisibility: 'hidden', transform: `rotateY(0deg)`}}>
-                    <Image className='relative w-full h-full object-cover' src={cardFrontImage} width={10000} height={10000} alt=''/>
+                    <Image className='relative w-full h-full object-cover' src={cardPaymentMethodId == "visa" || cardPaymentMethodId == "debvisa" ? cardFrontImageVisa : cardPaymentMethodId == "master" || cardPaymentMethodId == "debmaster" ? cardFrontImageMaster : cardPaymentMethodId == "amex" ? cardFrontImageAmericanExpress : cardFrontImage} width={10000} height={10000} alt=''/>
                     <div className='absolute w-[95.3%] bottom-[45px]'>
                       <div className='flex items-center px-[20px] gap-[10px]'>
                         {[0,1,2,3].map((index)=> (
-                          <span key={index} className={`text-[#838383] text-[20px]`}>{cardNumberDigits[index]?.padEnd(4, "*") || '****'}</span>
+                          <span key={index} className={`${cardPaymentMethodId.length > 1 && cardPaymentMethodId !== "amex" ? "card-text" : cardPaymentMethodId == "amex" ? "text-[#838383]" : "text-[#838383]"} text-[20px]`}>{cardNumberDigits[index]?.padEnd(4, "*") || '****'}</span>
                         ))}
                       </div>
                     </div>
                     <div className='absolute w-[95.3%] bottom-[20px]'>
                       <div className='flex items-center justify-between px-[20px]'>
-                        <span className='text-[12px] text-[#838383]'>{!fullName ? "NOMBRE Y APELLIDO" : fullName}</span>
-                        <span className='text-[12px] text-[#838383]'>MM/AA</span>
+                        <span className={`text-[12px] ${cardPaymentMethodId.length > 1 && cardPaymentMethodId !== "amex" ? "card-text" : cardPaymentMethodId == "amex" ? "text-[#838383]" : "text-[#838383]"}`}>{!fullName ? "NOMBRE Y APELLIDO" : fullName}</span>
+                        <span className={`text-[12px] ${cardPaymentMethodId.length > 1 && cardPaymentMethodId !== "amex" ? "card-text" : cardPaymentMethodId == "amex" ? "text-[#838383]" : "text-[#838383]"}`}>MM/AA</span>
                       </div>
                     </div>
                   </div>
                   <div className='absolute w-full h-full rounded-[5px] object-cover' style={{backfaceVisibility: 'hidden' , transform: 'rotateY(180deg)'}}>
-                    <Image className='relative w-full h-full object-cover' src={cardBackImage} width={10000} height={10000} alt=''/>
+                    <Image className='relative w-full h-full object-cover' src={cardPaymentMethodId == "visa" ? cardBackImageVisa : cardPaymentMethodId == "master" ? cardBackImageMaster : cardPaymentMethodId == "amex" ? cardBackImageAmericanExpress : cardBackImage} width={10000} height={10000} alt=''/>
                     <div className='absolute w-[95.3%] bottom-[78px] left-[200px]'>
                       <div className='flex items-center px-[20px] gap-[10px]'>
-                      <span className={`text-[#838383] text-[14px]`}>{cardSecurityCode.padEnd(3, "*") || "***"}</span>
+                      <span className={`${cardPaymentMethodId.length > 1 && cardPaymentMethodId !== "amex" ? "card-text" : cardPaymentMethodId == "amex" ? "text-[#838383]" : "text-[#838383]"} text-[14px]`}>{cardSecurityCode.padEnd(3, "*") || "***"}</span>
                       </div>
                     </div>
                   </div>

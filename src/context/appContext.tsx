@@ -68,6 +68,10 @@ interface AppContextTypes {
     setFullName: React.Dispatch<React.SetStateAction<string>>;
     cardId: string;
     setCardId: React.Dispatch<React.SetStateAction<string>>;
+    cardpaymentTypeId: string;
+    setCardPaymentTypeId: React.Dispatch<React.SetStateAction<string>>; 
+    cardPaymentMethodId: string;
+    setCardPaymentMethodId: React.Dispatch<React.SetStateAction<string>>;
     allCard: AllCardProps[];
     setAllCard: React.Dispatch<React.SetStateAction<AllCardProps[]>>;
 }
@@ -98,6 +102,8 @@ const AppContextProvider: React.FC<AppContentProps> = ({ children }) => {
     const [cardSecurityCode, setCardSecurityCode] = useState<string>("");
     const [fullName, setFullName] = useState<string>("");
     const [cardId, setCardId] = useState<string>("");
+    const [cardpaymentTypeId, setCardPaymentTypeId] = useState<string>("");
+    const [cardPaymentMethodId, setCardPaymentMethodId] = useState<string>("");
     useEffect(() => {
         if (Cookies.get("token")) {
             if (!user.username) {
@@ -150,7 +156,7 @@ const AppContextProvider: React.FC<AppContentProps> = ({ children }) => {
         }
     }, [user]);
     return (
-        <AppContext.Provider value={{ showSign, setShowSign, showCard, setShowCard, showCardModal, setShowCardModal, errorSign, setErrorSign, user, setUser, showUser, setShowUser ,productsUrl, setProductsUrl, cardNumberDigits, setCardNumberDigits, cardDateNumber, setCardDateNumber, cardSecurityCode, setCardSecurityCode, fullName, setFullName, cardId, setCardId, allCard, setAllCard }}>
+        <AppContext.Provider value={{ showSign, setShowSign, showCard, setShowCard, showCardModal, setShowCardModal, errorSign, setErrorSign, user, setUser, showUser, setShowUser ,productsUrl, setProductsUrl, cardNumberDigits, setCardNumberDigits, cardDateNumber, setCardDateNumber, cardSecurityCode, setCardSecurityCode, fullName, setFullName, cardId, setCardId, allCard, setAllCard, cardpaymentTypeId, setCardPaymentTypeId, cardPaymentMethodId, setCardPaymentMethodId }}>
             {children}
         </AppContext.Provider>
     );

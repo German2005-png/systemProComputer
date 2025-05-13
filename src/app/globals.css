@@ -226,3 +226,17 @@ body {
     gap: 40px !important;
   }
 }
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* Card design */
+
+.card-text {
+  background: linear-gradient(to bottom, #999 0.1em, #fff 0.7em);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////// */

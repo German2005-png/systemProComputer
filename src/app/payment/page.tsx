@@ -45,7 +45,7 @@ interface ChooseDeviveryProps {
 export default function PaymentPage() {
   const [chooseDevivery, setChooseDelivery] = useState<ChooseDeviveryProps>({receivePackage: "Llega el Lunes", removePackage: "Retirar entre el Lunes a Martes"});
   const [formScroll, setFormScroll] = useState<number>(0);
-  const { user, showCard, setShowCard, setShowCardModal, cardNumberDigits, cardDateNumber, cardSecurityCode, fullName, cardId } = useAppContext();
+  const { user, showCard, setShowCard, setShowCardModal, cardNumberDigits, cardDateNumber, cardSecurityCode, fullName, cardId, cardPaymentMethodId, setCardPaymentTypeId } = useAppContext();
   const formScrollRef = useRef<HTMLDivElement>(null);
   const btnFormScrooll = useRef<HTMLButtonElement>(null);
 
@@ -124,7 +124,7 @@ export default function PaymentPage() {
           securityCode: cardSecurityCode,
           identificationType: "DNI",
           identificationNumber: cardId,
-          payment_method_id: "visa"
+          payment_method_id: cardPaymentMethodId
         })
         // const cardTokenResponse = await mp?.createCardToken({
         //   cardNumber: "5031755734530604",
@@ -142,7 +142,7 @@ export default function PaymentPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ token: cardTokenResponse.id, identificationType: 'DNI', identificationNumber: cardId })
+          body: JSON.stringify({ token: cardTokenResponse.id, identificationType: 'DNI', identificationNumber: cardId, paymentMethodId: cardPaymentMethodId })
         });
         const result = await response.json();
         console.log("RESULT: ", result);
@@ -156,13 +156,13 @@ export default function PaymentPage() {
       formScrollRef.current.scrollTo({left: formScrollRef.current.offsetWidth - formScrollRef.current.offsetWidth, behavior: "smooth"});
     }
   }
-  console.log("cardNumberDigits: ", cardNumberDigits.join(""));
-  console.log("fullName: ", fullName);
-  console.log("cardSecurityCode: ", cardSecurityCode);
-  console.log("cardDateNumber: ", parseInt(cardDateNumber[0]), parseInt(cardDateNumber[1]));
-  console.log("cardDateNumberType: ", typeof parseInt(cardDateNumber[0]), typeof cardDateNumber[1]);
-  console.log("cardID: ", cardId);
-  console.log("Date: ", new Date());
+  // console.log("cardNumberDigits: ", cardNumberDigits.join(""));
+  // console.log("fullName: ", fullName);
+  // console.log("cardSecurityCode: ", cardSecurityCode);
+  // console.log("cardDateNumber: ", parseInt(cardDateNumber[0]), parseInt(cardDateNumber[1]));
+  // console.log("cardDateNumberType: ", typeof parseInt(cardDateNumber[0]), typeof cardDateNumber[1]);
+  // console.log("cardID: ", cardId);
+  // console.log("Date: ", new Date());
   return (
     <>
     {/* Payment form */}
@@ -221,7 +221,10 @@ export default function PaymentPage() {
               <label className="font-semibold text-[#fd4e4e]" htmlFor="">
                 Tarjetas de débito
               </label>
-              <button className="flex items-center gap-[5px] w-full border border-solid border-[#0000001a] p-[10px] rounded-[10px] cursor-pointer" type="button" onClick={() => setShowCardModal("débito")}>
+              <button className="flex items-center gap-[5px] w-full border border-solid border-[#0000001a] p-[10px] rounded-[10px] cursor-pointer" type="button" onClick={() => {
+                setShowCardModal("débito");
+                setCardPaymentTypeId("debit_card");
+              }}>
                 <Image className="w-[24px] h-[24px] min-w-[24px]" src={paymentIcon} width={24} height={24} alt=""/>
                 Agregar tarjeta de débito
               </button>
@@ -234,7 +237,10 @@ export default function PaymentPage() {
               <label className="font-semibold text-[#fd4e4e]" htmlFor="">
                 Tarjetas de crédito
               </label>
-              <button className="flex items-center gap-[5px] w-full border border-solid border-[#0000001a] p-[10px] rounded-[10px] cursor-pointer" type="button" onClick={() => setShowCardModal("crédito")}>
+              <button className="flex items-center gap-[5px] w-full border border-solid border-[#0000001a] p-[10px] rounded-[10px] cursor-pointer" type="button" onClick={() => {
+                setShowCardModal("crédito");
+                setCardPaymentTypeId("credit_card");
+              }}>
                 <Image className="w-[24px] h-[24px] min-w-[24px]" src={paymentIcon} width={24} height={24} alt=""/>
                 Agregar tarjeta de crédito
               </button>
