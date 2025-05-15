@@ -266,7 +266,7 @@ export async function paymentMp(req: NextRequest) {
       installments: 1,
       payment_method_id: paymentMethodId,
       payer: {
-        email: "german.contacto06@gmail.com",
+        email: "f.g.p.yt06@gmail.com",
         identification: {
           type: identificationType,
           number: identificationNumber,
@@ -284,9 +284,6 @@ export async function paymentMp(req: NextRequest) {
     return NextResponse.json({ message: "Pago realizado!", data: data }, { status: 200 });
   } catch (error) {
     console.error("Error al hacer la transferencia: ", error);
-    return NextResponse.json(
-      { error: "Error al procesar el pago" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Error al procesar el pago", error: error }, { status: 500 });
   }
 }
