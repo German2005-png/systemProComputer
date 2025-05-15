@@ -17,8 +17,8 @@ declare global {
       createCardToken: (params: {
         cardNumber: string;
         cardholderName: string;
-        expirationMonth: string;
-        expirationYear: string;
+        cardExpirationMonth: string;
+        cardExpirationYear: string;
         securityCode: string;
         identificationType: string;
         identificationNumber: string;
@@ -117,8 +117,8 @@ export default function PaymentPage() {
         const cardTokenResponse = await mp?.createCardToken({
           cardNumber: cardNumberDigits.join(""),
           cardholderName: fullName,
-          expirationMonth: cardDateNumber[0],
-          expirationYear: cardDateNumber[1],
+          cardExpirationMonth: cardDateNumber[0],
+          cardExpirationYear: cardDateNumber[1],
           // expirationDate: cardDateNumber[0] + "/" + cardDateNumber[1],
           securityCode: cardSecurityCode,
           identificationType: "DNI",
@@ -127,8 +127,8 @@ export default function PaymentPage() {
         // const cardTokenResponse = await mp?.createCardToken({
         //   cardNumber: "4509953566233704",
         //   cardholderName: "APRO",
-        //   expirationMonth: 11,
-        //   expirationYear: 2030,
+        //   expirationMonth: "11",
+        //   expirationYear: "30",
         //   securityCode: "123",
         //   identificationNumber: "12345678",
         //   identificationType: "DNI",
