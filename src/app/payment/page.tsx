@@ -17,8 +17,8 @@ declare global {
       createCardToken: (params: {
         cardNumber: string;
         cardholderName: string;
-        expirationMonth: number;
-        expirationYear: number;
+        expirationMonth: string;
+        expirationYear: string;
         securityCode: string;
         identificationType: string;
         identificationNumber: string;
@@ -117,22 +117,21 @@ export default function PaymentPage() {
         const cardTokenResponse = await mp?.createCardToken({
           cardNumber: cardNumberDigits.join(""),
           cardholderName: fullName,
-          expirationMonth: parseInt(cardDateNumber[0]),
-          expirationYear: parseInt(cardDateNumber[1]),
+          expirationMonth: cardDateNumber[0],
+          expirationYear: cardDateNumber[1],
           // expirationDate: cardDateNumber[0] + "/" + cardDateNumber[1],
           securityCode: cardSecurityCode,
           identificationType: "DNI",
           identificationNumber: cardId
         })
         // const cardTokenResponse = await mp?.createCardToken({
-        //   cardNumber: "5031755734530604",
+        //   cardNumber: "4509953566233704",
         //   cardholderName: "APRO",
         //   expirationMonth: 11,
-        //   expirationYear: 30,
+        //   expirationYear: 2030,
         //   securityCode: "123",
-        //   identificationType: "DNI",
         //   identificationNumber: "12345678",
-        //   payment_method_id: "master"
+        //   identificationType: "DNI",
         // })
         console.log("cardTokenResponse: ", cardTokenResponse);
         const response = await fetch("/api/payment", {
@@ -140,7 +139,7 @@ export default function PaymentPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ token: cardTokenResponse.id, identificationType: 'DNI', identificationNumber: cardId, paymentMethodId: cardPaymentMethodId })
+          body: JSON.stringify({ token: cardTokenResponse, identificationType: 'DNI', identificationNumber: cardId, paymentMethodId: cardPaymentMethodId }),
         });
         const result = await response.json();
         console.log("RESULT: ", result);

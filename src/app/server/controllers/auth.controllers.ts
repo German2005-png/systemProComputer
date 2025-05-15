@@ -244,7 +244,6 @@ export async function getCard(req: NextRequest) {
 export async function paymentMp(req: NextRequest) {
   const { token, identificationType, identificationNumber, paymentMethodId } = await req.json();
   console.log("Token recibido: ", token);
-  console.dir(token, { depth: null });
   try {
     const foundUser = await (await userFound(req)).json();
 
@@ -256,26 +255,24 @@ export async function paymentMp(req: NextRequest) {
       accessToken: process.env.ACCESS_TOKEN_MERCADO_PAGO || "",
       options: { timeout: 5000 },
     });
-
     const payment = new Payment(client);
 
     console.log(payment);
 
     const body = {
       transaction_amount: 100.1,
-      token: token,
+      token: token.id,
       description: "Compra en tienda",
       installments: 1,
       payment_method_id: paymentMethodId,
       payer: {
-        email: "mauricontacto23@gmail.com",
+        email: "german.contacto06@gmail.com",
         identification: {
           type: identificationType,
           number: identificationNumber,
         },
       },
     };
-
     const requestOptions = {
       idempotencyKey: randomUUID(),
     };
@@ -286,7 +283,7 @@ export async function paymentMp(req: NextRequest) {
     
     return NextResponse.json({ message: "Pago realizado!", data: data }, { status: 200 });
   } catch (error) {
-    console.error("Error al pagar: ", error);
+    console.error("Error al hacer la transferencia: ", error);
     return NextResponse.json(
       { error: "Error al procesar el pago" },
       { status: 500 }
