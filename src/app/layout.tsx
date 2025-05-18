@@ -9,6 +9,7 @@ import NavUser from "@/components/navegation/navUser";
 import NavCart from "@/components/navegation/navCart";
 import CardModal from "@/components/cardModal/cardModal";
 import Script from "next/script";
+import NavBurger from "@/components/navegation/navBurger";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -45,6 +46,7 @@ export default function RootLayout({
           <ContSign />
           <Navegation />
           <NavCart />
+          <NavBurger />
           <NavUser />
           <Content>{children}</Content>
         </AppContextProvider>

@@ -8,14 +8,18 @@ import americanExpressIcon from '../../../public/svg/americanExpress.svg';
 import pagoFacilIcon from '../../../public/svg/pagoFacil.svg';
 import mercadoPagoIcon from '../../../public/svg/mercadoPago.svg';
 import rapiPagoIcon from '../../../public/svg/rapipago.svg';
+import facebookIcon from '../../../public/svg/facebook.svg';
+import instagramIcon from '../../../public/svg/instagram.svg';
+import tiktokIcon from '../../../public/svg/tiktok.svg';
+import twitterIcon from '../../../public/svg/twitter.svg';
 import Image from 'next/image';
 
 export default function Footer() {
     const mediosDePagoList = [visaIcon, mastercardIcon, americanExpressIcon, mercadoPagoIcon, visaDebitoIcon, naranjaIcon, pagoFacilIcon, rapiPagoIcon];
-    const socialList = ["Facebook", "Instagram", "Tiktok", "Youtube"];
+    const socialList = [{name: "Facebook", image: facebookIcon}, {name: "Instagram", image: instagramIcon}, {name: "Tiktok", image: tiktokIcon}, {name: "Twitter", image: twitterIcon}];
   return (
-    <footer className='flex items-center flex-wrap justify-between w-full bg-content py-[25px] px-[30px] rounded-[29px]'>
-        <div className='flex flex-col items-center gap-2 justify-center'>
+    <footer className='flex items-center flex-wrap justify-between w-full bg-content py-[25px] px-[30px] rounded-[29px] cont-footer'>
+        <div className='flex flex-col items-center gap-2 justify-center cont-footer-spc-title'>
             <Image src={spcLogoIcon} width={234} height={77} alt='' />
             <h2 className='font-medium text-[22px]'>SystemProComputer © 2023</h2>
             <span className='opacity-75'>Todos los derechos reservado</span>
@@ -36,12 +40,17 @@ export default function Footer() {
                 ))}
             </ul>
             <button className='bg-btn rounded-[30px] py-1 px-3 text-white'>Botón de arrepentimiento</button>
+            <ul className='flex items-center gap-4 cont-socials-icons'>
+                {socialList.map((Element, index)=> (
+                    <Image key={index} className='flex items-center w-[24px] h-[24px]' src={Element.image} width={24} height={24} alt=''></Image>
+                ))}
+            </ul>
         </div>
-        <div className='flex flex-col gap-[20px] justify-between'>
+        <div className='flex flex-col gap-[20px] justify-between cont-socials'>
             <h2 className='font-semibold text-[#FD4E4E]'>SEGUINOS EN</h2>
             <ul className='flex flex-col gap-[5px]'>
                 {socialList.map((Element, index)=> (
-                    <li key={index}>{Element}</li>
+                    <li key={index}>{Element.name}</li>
                 ))}
             </ul>
         </div>

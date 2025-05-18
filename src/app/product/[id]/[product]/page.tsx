@@ -23,17 +23,18 @@ interface ProductProps {
   images: string[];
   quantity: number;
   title: string;
+  category: string;
 }
 
-interface ProductsFindProps {
-  products: ProductProps[];
-}
+// interface ProductsFindProps {
+//   products: ProductProps[];
+// }
 
 export default function Product() {
-  const [productFound, setProductFound] = useState<ProductProps>({id: 0, name: "", price: 0, image: "", images: [], quantity: 0, title: ""});
+  const [productFound, setProductFound] = useState<ProductProps>({id: 0, name: "", price: 0, image: "", images: [], quantity: 0, title: "", category: ""});
   const [selectedImage, setSelectedImage] = useState<string>("");
   const [quantity, setQuantity] = useState<number>(1);
-  const [productsFind, setProductsFind] = useState<ProductsFindProps>({products: []});
+  // const [productsFind, setProductsFind] = useState<ProductsFindProps>({products: []});
   const params = useParams<{ id: string; product: string }>();
   const { setShowCard, user } = useAppContext();
   const [hoverImage, setHoverImage] = useState<string>("");
@@ -44,7 +45,7 @@ export default function Product() {
       (p) => p.id.toString() == params.id
     );
     if (productFind) {
-      setProductFound({id: productFind.id, name: productFind.name, price: productFind.price, image: productFind.image, images: productFind.images, quantity: productFind.quantity, title: productFind.title});
+      setProductFound({id: productFind.id, name: productFind.name, price: productFind.price, image: productFind.image, images: productFind.images, quantity: productFind.quantity, title: productFind.title, category: productFind.category});
     }
   }, [params.id]);
   useEffect(() => {
@@ -70,14 +71,14 @@ export default function Product() {
       return {...prev, products: [...prev.products, {...productFound, quantity}]};
     });
   }
-  useEffect(() => {
-    if(productFound) {
-      const productFinds = allProduct.allProducts.filter((p) => p.title === productFound.title && p.id !== productFound.id);
-      if(productFinds.length > 0) {
-        setProductsFind({products: productFinds});
-      }
-    }
-  },[productFound]);
+  // useEffect(() => {
+  //   if(productFound) {
+  //     const productFinds = allProduct.allProducts.filter((p) => p.title === productFound.title && p.id !== productFound.id);
+  //     if(productFinds.length > 0) {
+  //       setProductsFind({products: productFinds});
+  //     }
+  //   }
+  // },[productFound]);
   function addProductServer(product: ProductProps) {
     if(user.username) {
       fetch("/api/createCard", {
@@ -113,9 +114,7 @@ export default function Product() {
       const width = rect.width;
       const height = rect.height;
       const posX = Math.max(0, Math.min(x, width));
-      console.log("PosX: ", posX);
       const posY = Math.max(0, Math.min(y, height));
-      console.log("PosY: ", (posY / height) * 100);
       setZoomPosition({
         x: (posX / width) * 100,
         y: (posY / height) * 100,
@@ -128,7 +127,6 @@ export default function Product() {
   function handleMouseLeaveImage() {
     setHoverImage("");
   }
-  console.log("Hover Image: ", hoverImage);
   return (
     <div className="flex flex-col gap-[60px] mt-[40px]">
       <div className="flex w-full justify-between gap-[50px]">
@@ -193,7 +191,7 @@ export default function Product() {
           </div>
         </div>
       </div>
-      <Products name="PRODUCTOS RECOMENDADOS" showButton={true} data={productsFind.products} />
+      <Products name={productFound.category} showButton={true} data={allProduct.allProducts.filter((p)=> p.category == productFound.category).filter((e)=> e.id !== productFound.id)} />
       <ContSponsors />
       <Deliveries />
       <Footer />

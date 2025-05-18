@@ -88,11 +88,11 @@ const Products: React.FC<ProductsProps> = ({name, showButton, data}) => {
         )}
         <ul ref={contProducts} className={`flex items-center ${!showButton ? "flex-wrap" : ""} relative scroll-smooth gap-[10px] w-full ${showButton ? "overflow-x-hidden" : ""} snap-x snap-proximity scroll-p-[0px]`} style={{scrollSnapType: 'x'}}>
           {data.map((product, index)=> (
-            <div ref={productRef} key={index} className={`flex flex-col gap-1 shrink-0 snap-start overflow-hidden w-full flex-shrink-1 basis-full sm:basis-[49.62%] md:basis-[32.7%] lg:basis-[24.4%] ${showButton ? "product-size" : "min-w-[240px]"}`}>
+            <div ref={productRef} key={index} className={`flex flex-col gap-1 shrink-0 snap-start overflow-hidden w-full flex-shrink-1 ${!showButton ? "product-category-sizes" : "basis-full sm:basis-[49.62%] md:basis-[32.7%] lg:basis-[24.4%]"} ${showButton ? "product-size" : "min-w-[240px]"}`}>
               <Link href={`/product/${product.id}/${encodeURIComponent(product.name)}`} className='flex mx-auto w-full max-w-[200px] max-h-[200px] object-cover snap-center'>
                 <Image className='flex w-full h-full max-w-[100%] max-h-[202.27px] object-cover' src={`/image/${product?.images[0]}`} width={2000} height={2000} alt=''/>
               </Link>
-              <Link className='text-limit' title={product.name} href={`/product//${product.id}/${product.name.toLocaleLowerCase().replaceAll(" ", "")}`}>{product.name}</Link>
+              <Link className='text-limit' title={product.name} href={`/product/${product.id}/${product.name.toLocaleLowerCase().replaceAll(" ", "")}`}>{product.name}</Link>
               <CurrencyFormat className='font-medium' price={product.price} format='es-ES' key={index}/>
               <button className='border-2 border-solid rounded-full border-[#FD4E4E] hover:bg-[#FD4E4E] hover:text-white' onClick={async ()=> {
                 addProductToCart(product);

@@ -56,6 +56,8 @@ interface AppContextTypes {
     setUser: React.Dispatch<React.SetStateAction<UserProps>>;
     showUser: ShowNavUser;
     setShowUser: React.Dispatch<React.SetStateAction<ShowNavUser>>;
+    showBurger: boolean;
+    setShowBurger: React.Dispatch<React.SetStateAction<boolean>>;
     productsUrl: string;
     setProductsUrl: React.Dispatch<React.SetStateAction<string>>;
     cardNumberDigits: string[];
@@ -95,6 +97,7 @@ const AppContextProvider: React.FC<AppContentProps> = ({ children }) => {
     const [errorSign, setErrorSign] = useState<ErrorSignProps>({type: "", title: "", message: ""});
     const [user, setUser] = useState<UserProps>({ username: "", createdAt: "" });
     const [showUser, setShowUser] = useState<ShowNavUser>({user: {username: "", createdAt: ""}, state: false});
+    const [showBurger, setShowBurger] = useState<boolean>(false);
     const [allCard, setAllCard] = useState<AllCardProps[]>([]);
     const [productsUrl, setProductsUrl] = useState<string>("");
     const [cardNumberDigits, setCardNumberDigits] = useState<string[]>([])
@@ -156,7 +159,7 @@ const AppContextProvider: React.FC<AppContentProps> = ({ children }) => {
         }
     }, [user]);
     return (
-        <AppContext.Provider value={{ showSign, setShowSign, showCard, setShowCard, showCardModal, setShowCardModal, errorSign, setErrorSign, user, setUser, showUser, setShowUser ,productsUrl, setProductsUrl, cardNumberDigits, setCardNumberDigits, cardDateNumber, setCardDateNumber, cardSecurityCode, setCardSecurityCode, fullName, setFullName, cardId, setCardId, allCard, setAllCard, cardpaymentTypeId, setCardPaymentTypeId, cardPaymentMethodId, setCardPaymentMethodId }}>
+        <AppContext.Provider value={{ showSign, setShowSign, showCard, setShowCard, showCardModal, setShowCardModal, errorSign, setErrorSign, user, setUser, showUser, setShowUser ,productsUrl, setProductsUrl, cardNumberDigits, setCardNumberDigits, cardDateNumber, setCardDateNumber, cardSecurityCode, setCardSecurityCode, fullName, setFullName, cardId, setCardId, allCard, setAllCard, cardpaymentTypeId, setCardPaymentTypeId, cardPaymentMethodId, setCardPaymentMethodId, showBurger, setShowBurger }}>
             {children}
         </AppContext.Provider>
     );

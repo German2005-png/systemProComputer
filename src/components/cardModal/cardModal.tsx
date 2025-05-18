@@ -24,7 +24,7 @@ export default function CardModal() {
     if(cardpaymentTypeId == "credit_card") {
       if(value.startsWith("4")) {
         setCardPaymentMethodId("visa");
-      } else if(/^5[1-5]/.test(value)) {
+      } else if(/^5[0-5]/.test(value)) {
       setCardPaymentMethodId("master")
       } else if(value.startsWith("34") || value.startsWith("37")) {
         setCardPaymentMethodId("amex")
@@ -34,7 +34,7 @@ export default function CardModal() {
     } else if(cardpaymentTypeId == "debit_card") {
       if(value.startsWith("4")) {
         setCardPaymentMethodId("debvisa");
-      } else if(/^5[1-5]/.test(value)) {
+      } else if(/^5[0-5]/.test(value)) {
       setCardPaymentMethodId("debmaster")
       } else {
         setCardPaymentMethodId("");
@@ -56,7 +56,6 @@ export default function CardModal() {
     const value = e.target.value.replace(/\D/g, '');
     setCardId(value)
   }
-  console.log(cardPaymentMethodId)
   return (
     <div className={`${showCardModal ? "flex" : "hidden"} items-center bg-[#00000028] justify-center fixed z-[45] backdrop-blur-[8px] m-auto w-full h-full`}>
         <div className='flex flex-col bg-[#f3f3f3] m-auto border border-solid border-[#0000001a] w-full p-[20px] max-w-[750px] h-[430px] rounded-[20px] z-50'>

@@ -9,7 +9,7 @@ import { useAppContext } from '@/context/appContext';
 import Cookies from 'js-cookie';
 
 export default function Navegation() {
-    const { showCard, setShowCard, showUser, setShowUser, setShowSign, user } = useAppContext();
+    const { showCard, setShowCard, showUser, setShowUser, setShowSign, user, showBurger ,setShowBurger } = useAppContext();
     const links = [{text: 'Inicio', link: '/'}, {text: 'Productos', link: 'productos/pcarmadas'}];
     const [token, setToken] = useState<boolean>(true);
     useEffect(()=> {
@@ -36,20 +36,24 @@ export default function Navegation() {
             ) : (
                 <button className='text-center font-semibold bg-btn text-[14px] py-[5px] px-[8px] rounded-[15px] text-white whitespace-nowrap truncate nav-links' disabled={token} onClick={()=> setShowSign("inicia sesíon")}>Iniciar Sesión</button>
             )}
-            <button className='min-w-[24px] min-h-[24px] nav-burger'>
+            <button className='min-w-[24px] min-h-[24px] nav-burger' onClick={()=> {
+                setShowBurger(!showBurger);
+                setShowCard({products: showCard.products, state: false});
+            }}>
                 <Image className='w-[24px] h-[24px]' src={burgerIcon} width={24} height={24} alt=''/>
             </button>
             <button className='relative' onClick={()=> {
                 setShowCard({products: showCard.products, state: !showCard.state});
                 setShowUser((prev) => ({user: {username: prev.user.username, createdAt: prev.user.createdAt}, state: false}));
+                setShowBurger(false);
             }}>
-                {showCard.products.length > 0 && (
-                    <div className='absolute bg-white rounded-full p-[1px] -top-[5px] left-[15px]'>
-                        <div className='flex items-center w-[8px] h-[8px] px-[4px] rounded-full justify-center text-center bg-btn'>
-                        </div>
+            {showCard.products.length > 0 && (
+                <div className='absolute bg-white rounded-full p-[1px] -top-[5px] left-[15px]'>
+                    <div className='flex items-center w-[8px] h-[8px] px-[4px] rounded-full justify-center text-center bg-btn'>
                     </div>
-                )}
-                <Image src={cardIcon} width={18} height={18} alt=''/>
+                </div>
+            )}
+            <Image src={cardIcon} width={18} height={18} alt=''/>
             </button>
         </ul>
     </nav>

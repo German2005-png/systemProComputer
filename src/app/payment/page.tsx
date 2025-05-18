@@ -127,8 +127,8 @@ export default function PaymentPage() {
         // const cardTokenResponse = await mp?.createCardToken({
         //   cardNumber: "4509953566233704",
         //   cardholderName: "APRO",
-        //   expirationMonth: "11",
-        //   expirationYear: "30",
+        //   cardExpirationMonth: "11",
+        //   cardExpirationYear: "30",
         //   securityCode: "123",
         //   identificationNumber: "12345678",
         //   identificationType: "DNI",
@@ -160,6 +160,7 @@ export default function PaymentPage() {
   // console.log("cardDateNumberType: ", typeof parseInt(cardDateNumber[0]), typeof cardDateNumber[1]);
   // console.log("cardID: ", cardId);
   // console.log("Date: ", new Date());
+  console.log(cardPaymentMethodId)
   return (
     <>
     {/* Payment form */}
