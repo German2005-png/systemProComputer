@@ -129,20 +129,29 @@ export default function Product() {
   }
   return (
     <div className="flex flex-col gap-[60px] mt-[40px]">
-      <div className="flex w-full justify-between gap-[50px]">
+      <div className="flex w-full justify-between gap-[50px] cont-description-product">
         <div className="flex items-start max-h-[400px] gap-[50px]">
-          <div className="flex flex-col gap-[30px] justify-start">
+          <div className="flex flex-col gap-[30px] justify-start cont-images-product">
             {productFound?.images.map((productImage, index)=> (
               <article key={index} className={`flex items-center justify-center cursor-pointer w-[120px] min-w-[120px] h-[80px] min-h-[80px] bg-[#eeeeee] rounded-[20px] ${productImage === selectedImage ? "border-2 border-solid border-[#FD4E4E]" : ""}`} onClick={()=> setSelectedImage(productImage)}>
                 <Image className="w-full h-full object-contain" src={`/image/${productImage}`} width={10000} height={10000} alt=""/>
               </article>
             ))}
           </div>
-          <div className="flex items-center justify-center m-auto w-full min-w-[478px] object-contain h-[410px] rounded-[30px]" onMouseLeave={()=> handleMouseLeaveImage()} onMouseMove={handleMouseMoveImage} onMouseEnter={()=> handleMouseEnterImage(selectedImage)}>
+          <div className="flex items-center justify-center m-auto w-full min-w-[478px] object-contain h-[410px] rounded-[30px] product-image" onMouseLeave={()=> handleMouseLeaveImage()} onMouseMove={handleMouseMoveImage} onMouseEnter={()=> handleMouseEnterImage(selectedImage)}>
             <Image ref={imgRef} className="h-auto w-full max-w-[450px] rounded-[30px]" src={`/image/${selectedImage}`} width={100000} height={10} alt=""/>
           </div>
         </div>
-        <div className="flex flex-col relative w-full flex-1 gap-[10px]">
+        {/* product images */}
+        <div className="cont-product-images-2 gap-[30px] justify-center overflow-auto">
+          {productFound?.images.map((productImage, index)=> (
+            <article key={index} className={`flex items-center justify-center cursor-pointer max-h-[100px] bg-[#eeeeee] rounded-[20px] p-[10px] ${productImage === selectedImage ? "border-2 border-solid border-[#FD4E4E]" : ""}`} onClick={()=> setSelectedImage(productImage)}>
+              <Image className="w-full h-full object-contain" src={`/image/${productImage}`} width={10000} height={10000} alt=""/>
+            </article>
+          ))}
+        </div>
+        {/* Description */}
+        <div className="flex flex-col relative w-full flex-1 gap-[10px] cont-product-description">
           {hoverImage.length > 0 && (
             <div className="absolute w-[100%] h-full bg-no-repeat bg-[#ffffff] z-[20]" style={{
               backgroundImage: `url(/image/${selectedImage})`,
@@ -171,7 +180,7 @@ export default function Product() {
             </span>
           </div>
           <div className="flex items-center gap-[10px]">
-            <button className="bg-btn text-white py-[10px] px-[20px] rounded-[30px] font-semibold" onClick={()=> {
+            <button className="bg-btn text-white py-[10px] px-[20px] rounded-[30px] font-semibold product-description-btn" onClick={()=> {
               addProductToCart(productFound);
               addProductServer(productFound);
             }}>
