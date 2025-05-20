@@ -278,8 +278,6 @@ export async function paymentMp(req: NextRequest) {
     };
 
     const data = await payment.create({ body, requestOptions });
-
-    console.log("Pago exitoso: ", data);
     
     return NextResponse.json({ message: "Pago realizado!", data: data }, { status: 200 });
   } catch (error) {

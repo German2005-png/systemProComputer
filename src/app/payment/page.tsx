@@ -44,7 +44,8 @@ interface ChooseDeviveryProps {
 export default function PaymentPage() {
   const [chooseDevivery, setChooseDelivery] = useState<ChooseDeviveryProps>({receivePackage: "Llega el Lunes", removePackage: "Retirar entre el Lunes a Martes"});
   const [formScroll, setFormScroll] = useState<number>(0);
-  const { user, showCard, setShowCard, setShowCardModal, cardNumberDigits, cardDateNumber, cardSecurityCode, fullName, cardId, cardPaymentMethodId, setCardPaymentTypeId } = useAppContext();
+  // const { user, showCard, setShowCard, setShowCardModal, cardNumberDigits, cardDateNumber, cardSecurityCode, fullName, cardId, cardPaymentMethodId, setCardPaymentTypeId } = useAppContext();
+  const { user, showCard, setShowCard, setShowCardModal, setCardPaymentTypeId, setErrorSign } = useAppContext();
   const formScrollRef = useRef<HTMLDivElement>(null);
   const btnFormScrooll = useRef<HTMLButtonElement>(null);
 
@@ -110,40 +111,37 @@ export default function PaymentPage() {
       formScrollRef.current.scrollTo({left: formScrollRef.current.offsetWidth, behavior: "smooth"});
     }
     if(formScrollRef.current && formScroll == 400) {
-      console.log("Comprar");
-      if(window.MercadoPago) {
-        const mp = new window.MercadoPago(process.env.NEXT_PUBLIC_PUBLIC_KEY || "", {locale: "es-AR"});
-        console.log("mp: ", mp);
-        const cardTokenResponse = await mp?.createCardToken({
-          cardNumber: cardNumberDigits.join(""),
-          cardholderName: fullName,
-          cardExpirationMonth: cardDateNumber[0],
-          cardExpirationYear: cardDateNumber[1],
-          // expirationDate: cardDateNumber[0] + "/" + cardDateNumber[1],
-          securityCode: cardSecurityCode,
-          identificationType: "DNI",
-          identificationNumber: cardId
-        })
-        // const cardTokenResponse = await mp?.createCardToken({
-        //   cardNumber: "4509953566233704",
-        //   cardholderName: "APRO",
-        //   cardExpirationMonth: "11",
-        //   cardExpirationYear: "30",
-        //   securityCode: "123",
-        //   identificationNumber: "12345678",
-        //   identificationType: "DNI",
-        // })
-        console.log("cardTokenResponse: ", cardTokenResponse);
-        const response = await fetch("/api/payment", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ token: cardTokenResponse, identificationType: 'DNI', identificationNumber: cardId, paymentMethodId: cardPaymentMethodId }),
-        });
-        const result = await response.json();
-        console.log("RESULT: ", result);
-      }
+      setErrorSign({type: "Warning", title: "Advertencia", message: "La transferencias estan desactivadas, por el momento."});
+      // if(window.MercadoPago) {
+      //   const mp = new window.MercadoPago(process.env.NEXT_PUBLIC_PUBLIC_KEY || "", {locale: "es-AR"});
+      //   const cardTokenResponse = await mp?.createCardToken({
+      //     cardNumber: cardNumberDigits.join(""),
+      //     cardholderName: fullName,
+      //     cardExpirationMonth: cardDateNumber[0],
+      //     cardExpirationYear: cardDateNumber[1],
+      //     // expirationDate: cardDateNumber[0] + "/" + cardDateNumber[1],
+      //     securityCode: cardSecurityCode,
+      //     identificationType: "DNI",
+      //     identificationNumber: cardId
+      //   })
+      //   // const cardTokenResponse = await mp?.createCardToken({
+      //   //   cardNumber: "4509953566233704",
+      //   //   cardholderName: "APRO",
+      //   //   cardExpirationMonth: "11",
+      //   //   cardExpirationYear: "30",
+      //   //   securityCode: "123",
+      //   //   identificationNumber: "12345678",
+      //   //   identificationType: "DNI",
+      //   // })
+      //   const response = await fetch("/api/payment", {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ token: cardTokenResponse, identificationType: 'DNI', identificationNumber: cardId, paymentMethodId: cardPaymentMethodId }),
+      //   });
+      //   await response.json();
+      // }
       
     }
   }
@@ -160,7 +158,6 @@ export default function PaymentPage() {
   // console.log("cardDateNumberType: ", typeof parseInt(cardDateNumber[0]), typeof cardDateNumber[1]);
   // console.log("cardID: ", cardId);
   // console.log("Date: ", new Date());
-  console.log(cardPaymentMethodId)
   return (
     <>
     {/* Payment form */}

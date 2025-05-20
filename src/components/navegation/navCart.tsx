@@ -25,8 +25,7 @@ export default function NavCart() {
       },
       body: JSON.stringify({ productId: product.id }),
     });
-    const result = await response.json();
-    console.log(result);
+    await response.json();
   }
   return (
     <div className={`fixed z-[45] bg-article p-4 rounded-es-[30px] transition-all ease-linear delay-75 ${showCard.state ? 'right-0 opacity-1' : '-right-full opacity-0'} w-full max-w-[280px]`}>

@@ -95,12 +95,6 @@ export default function Product() {
         }
         return res.json();
     })
-    .then((data) => {
-        console.log("new Card: ", data);
-        if(data) {
-            console.log("La DATA PA: ", data);
-        }
-    })
     .catch((error) => {
         console.error("Hubo un error al hacer la solicitud:", error);
     });

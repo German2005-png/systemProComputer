@@ -43,7 +43,6 @@ export default function SignUp() {
       setErrorSign({type: "Success", title: "Success", message: "Nuevo usuario!"});
       setShowSign("");
     }
-    console.log(result);
     setLoading(false);
     } catch (error) {
       setErrorSign({type: "Error", title: "Error", message: "Error al crear la cuenta"});

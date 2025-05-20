@@ -42,7 +42,6 @@ export default function SignIn() {
       setErrorSign({type: "Success", title: "Success", message: "Usuario encontrado!"});
       setShowSign("");
     }
-    console.log(result);
     setLoading(false);
   }
   function handleSignInText(e: React.ChangeEvent<HTMLInputElement>) {
