@@ -8,8 +8,6 @@ import ContSponsors from "@/components/sponsors/contSponsors";
 import Deliveries from "@/components/deliveries/deliveries";
 import Footer from "@/components/footer/footer";
 
-// import Image from "next/image";
-
 export default function Home() {
   return (
     <main className="flex flex-col gap-[40px]">
